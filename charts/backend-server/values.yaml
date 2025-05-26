@@ -11,7 +11,7 @@ image:
   pullPolicy: Always
 
 database:
-  host: mysql.default.khacthienit.click
+  host: mysql.default.svc.cluster.local
   username: root
   name: tasks_manager
   port: 3306
