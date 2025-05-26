@@ -18,7 +18,6 @@ spec:
         app: {{ .Values.appName }}
         env: {{ .Values.env | default "production" }}
     spec:
-      tolerations: {{ .Values.global.tolerations | default list | toYaml | nindent 8 }}
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
