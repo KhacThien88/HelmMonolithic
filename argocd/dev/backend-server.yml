@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: todoapp-backend-dev
+  namespace: argocd
+spec:
+  project: todoapp-backend
+  source:
+    repoURL: https://github.com/KhacThien88/HelmMonolithic
+    path: charts/backend-server
+    targetRevision: main
+    helm:
+      valueFiles:
+        - values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace:  todo-app-dev   
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true

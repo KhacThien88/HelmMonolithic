@@ -1,0 +1,20 @@
+appName: todoapp-backend
+env: dev
+service:
+  port: 5000
+  type: ClusterIP
+
+image:
+  repository: ktei8htop15122004/todo-app
+  tag: latest
+  pullSecret: dockerhub
+  pullPolicy: Always
+
+database:
+  host:
+    
+
+ingress:
+  domainName: backend-dev.khacthienit.click
+  path: /
+  pathType: Prefix

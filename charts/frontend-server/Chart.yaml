@@ -1,0 +1,10 @@
+apiVersion: v2
+name: todoapp-frontend
+description: A Helm chart for Todoapp-FE
+type: application
+version: 1.0.0
+appVersion: latest
+dependencies:
+  - name: common
+    version: 1.0.0
+    repository: "file://../common"

@@ -1,0 +1,16 @@
+appName: todoapp-frontend
+env: dev
+service:
+  port: 2048
+  type: ClusterIP
+
+image:
+  repository: ktei8htop15122004/todofe-app
+  tag: latest
+  pullSecret: dockerhub
+  pullPolicy: Always
+
+ingress:
+  domainName: frontend-staging.khacthienit.click
+  path: /
+  pathType: Prefix

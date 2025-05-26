@@ -1,0 +1,81 @@
+{{- define "common.deployment" -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "{{ .Values.appName }}-deployment"
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ .Values.appName }}
+spec:
+  replicas: {{ .Values.replicaCount | default 1 }}
+  revisionHistoryLimit: {{ .Values.revisionHistoryLimit | default 10 }}
+  selector:
+    matchLabels:
+      app: {{ .Values.appName }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.appName }}
+        env: {{ .Values.env | default "production" }}
+    spec:
+      tolerations: {{ .Values.global.tolerations | default list | toYaml | nindent 8 }}
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                  - key: env
+                    operator: In
+                    values:
+                      - {{ .Values.env | default "production" }}
+                topologyKey: kubernetes.io/hostname
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      imagePullSecrets:
+        - name: {{ .Values.image.pullSecret | default "regcred" }}
+{{- if .Values.initContainers }}
+      initContainers:
+{{ toYaml .Values.initContainers | indent 8 }}
+{{- end }}
+      containers:
+        - name: {{ .Values.appName }}
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag | default "latest" }}
+          imagePullPolicy: {{ .Values.image.pullPolicy | default "IfNotPresent" }}
+          ports:
+            - containerPort: {{ .Values.service.port | default 5000 }}
+              name: {{ .Values.service.name | default "http" }}
+              protocol: TCP
+          env:
+            - name: DB_HOST
+              value: {{ .Values.database.host | default "mysql-service" }}
+            - name: USERNAME
+              value: {{ .Values.database.username | quote }}
+            - name: PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.database.secretName | default "mysql-secrets" }}
+                  key: mysql-password
+            - name: DB_NAME
+              value: {{ .Values.database.name | default "tasks_db" }}
+            - name: DB_PORT
+              value: {{ .Values.database.port | default "3306" | quote }}
+          livenessProbe:
+            httpGet:
+              path: /tasks
+              port: {{ .Values.service.port | default 5000 }}
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /tasks
+              port: {{ .Values.service.port | default 5000 }}
+            initialDelaySeconds: 5
+            periodSeconds: 5
+      volumes:
+        - name: config-volume
+          configMap:
+            name: {{ .Values.configMap.name | default (printf "%s-config" .Values.appName) }}
+            defaultMode: 420
+{{- end }}
