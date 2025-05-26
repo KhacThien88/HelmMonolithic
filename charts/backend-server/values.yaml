@@ -11,7 +11,11 @@ image:
   pullPolicy: Always
 
 database:
-  host:
+  host: mysql.default.khacthienit.click
+  username: root
+  name: tasks_manager
+  port: 3306
+  secretName: mysql-root-pass
     
 
 ingress:

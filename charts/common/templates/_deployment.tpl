@@ -47,6 +47,7 @@ spec:
             - containerPort: {{ .Values.service.port | default 5000 }}
               name: {{ .Values.service.name | default "http" }}
               protocol: TCP
+          {{- if eq .Values.appName "todoapp-backend" }}
           env:
             - name: DB_HOST
               value: {{ .Values.database.host | default "mysql-service" }}
@@ -56,11 +57,12 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: {{ .Values.database.secretName | default "mysql-secrets" }}
-                  key: mysql-password
+                  key: password
             - name: DB_NAME
               value: {{ .Values.database.name | default "tasks_db" }}
             - name: DB_PORT
               value: {{ .Values.database.port | default "3306" | quote }}
+          {{- end }}
           livenessProbe:
             httpGet:
               path: /tasks
