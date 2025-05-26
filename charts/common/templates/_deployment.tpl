@@ -32,8 +32,6 @@ spec:
                 topologyKey: kubernetes.io/hostname
       dnsPolicy: ClusterFirst
       restartPolicy: Always
-      imagePullSecrets:
-        - name: {{ .Values.image.pullSecret | default "regcred" }}
 {{- if .Values.initContainers }}
       initContainers:
 {{ toYaml .Values.initContainers | indent 8 }}
@@ -41,7 +39,6 @@ spec:
       containers:
         - name: {{ .Values.appName }}
           image: {{ .Values.image.repository }}:{{ .Values.image.tag | default "latest" }}
-          imagePullPolicy: {{ .Values.image.pullPolicy | default "IfNotPresent" }}
           ports:
             - containerPort: {{ .Values.service.port | default 5000 }}
               name: {{ .Values.service.name | default "http" }}
