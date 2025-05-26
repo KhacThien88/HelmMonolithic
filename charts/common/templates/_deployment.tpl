@@ -59,16 +59,16 @@ spec:
             - name: DB_PORT
               value: {{ .Values.database.port | default "3306" | quote }}
           {{- end }}
-          livenessProbe:
-            httpGet:
-              path: /tasks
-              port: {{ .Values.service.port | default 5000 }}
-            initialDelaySeconds: 30
-            periodSeconds: 10
-          readinessProbe:
-            httpGet:
-              path: /tasks
-              port: {{ .Values.service.port | default 5000 }}
-            initialDelaySeconds: 5
-            periodSeconds: 5
+          # livenessProbe:
+          #   httpGet:
+          #     path: /tasks
+          #     port: {{ .Values.service.port | default 5000 }}
+          #   initialDelaySeconds: 30
+          #   periodSeconds: 10
+          # readinessProbe:
+          #   httpGet:
+          #     path: /tasks
+          #     port: {{ .Values.service.port | default 5000 }}
+          #   initialDelaySeconds: 5
+          #   periodSeconds: 5
 {{- end }}
