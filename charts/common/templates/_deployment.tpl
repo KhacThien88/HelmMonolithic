@@ -74,9 +74,4 @@ spec:
               port: {{ .Values.service.port | default 5000 }}
             initialDelaySeconds: 5
             periodSeconds: 5
-      volumes:
-        - name: config-volume
-          configMap:
-            name: {{ .Values.configMap.name | default (printf "%s-config" .Values.appName) }}
-            defaultMode: 420
 {{- end }}
