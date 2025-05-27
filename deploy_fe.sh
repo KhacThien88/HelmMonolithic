@@ -12,3 +12,7 @@ for SERVICE_NAME in "${SERVICES[@]}"; do
     --set image.tag=${IMAGE_TAG} \
     --set ingress.domainName=${SERVICE_NAME}.${DOMAIN_SUFFIX}
 done
+
+kubectl apply -f HelmMonolithic/argocd/app_project/app_argofe.yml
+kubectl apply -f HelmMonolithic/argocd/dev/frontend-server.yml
+kubectl apply -f HelmMonolithic/argocd/staging/frontend-server.yml
