@@ -1,4 +1,4 @@
-appName: todoapp-backend
+appName: todoapp-backend-staging
 env: staging
 service:
   port: 5000
