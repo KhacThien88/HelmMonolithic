@@ -1,4 +1,4 @@
-appName: todoapp-frontend
+appName: todoapp-frontend-staging
 env: staging
 service:
   port: 2048
@@ -16,4 +16,4 @@ ingress:
   pathType: Prefix
 backend:
   ingress:
-    domainName: backend-staging.khacthienit.click
+    domainStagingName: backend-staging.khacthienit.click

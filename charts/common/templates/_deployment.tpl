@@ -43,7 +43,7 @@ spec:
             - containerPort: {{ .Values.service.port | default 5000 }}
               name: {{ .Values.service.name | default "http" }}
               protocol: TCP
-          {{- if eq .Values.appName "todoapp-backend" }}
+          {{- if or (eq .Values.appName "todoapp-backend-dev") (eq .Values.appName "todoapp-backend-staging") }}
           env:
             - name: DB_HOST
               value: {{ .Values.database.host | default "mysql-service" }}
@@ -59,10 +59,15 @@ spec:
             - name: DB_PORT
               value: {{ .Values.database.port | default "3306" | quote }}
           {{- end }}
-          {{- if eq .Values.appName "todoapp-frontend" }}
+          {{- if eq .Values.appName "todoapp-frontend-dev" }}
           env:
             - name: API_URL
-              value: "https://{{ .Values.backend.ingress.domainName }}"
+              value: "https://{{ .Values.backend.ingress.domainDevName }}"
+          {{- end }}
+          {{- if eq .Values.appName "todoapp-frontend-staging" }}
+          env:
+            - name: API_URL
+              value: "https://{{ .Values.backend.ingress.domainStagingName }}"
           {{- end }}
           # livenessProbe:
           #   httpGet:

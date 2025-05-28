@@ -1,4 +1,4 @@
-appName: todoapp-frontend
+appName: todoapp-frontend-dev
 env: dev
 service:
   port: 2048
@@ -16,4 +16,4 @@ ingress:
   pathType: Prefix
 backend:
   ingress:
-    domainName: backend-dev.khacthienit.click
+    domainDevName: backend-dev.khacthienit.click
