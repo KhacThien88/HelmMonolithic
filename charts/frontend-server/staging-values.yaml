@@ -1,5 +1,5 @@
 appName: todoapp-frontend
-env: dev
+env: staging
 service:
   port: 2048
   type: ClusterIP
@@ -14,3 +14,6 @@ ingress:
   domainName: frontend-staging.khacthienit.click
   path: /
   pathType: Prefix
+backend:
+  ingress:
+    domainName: backend-staging.khacthienit.click

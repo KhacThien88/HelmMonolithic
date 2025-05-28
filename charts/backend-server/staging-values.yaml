@@ -1,5 +1,5 @@
 appName: todoapp-backend
-env: dev
+env: staging
 service:
   port: 5000
   type: ClusterIP

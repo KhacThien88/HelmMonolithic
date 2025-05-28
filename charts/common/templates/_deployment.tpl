@@ -59,6 +59,11 @@ spec:
             - name: DB_PORT
               value: {{ .Values.database.port | default "3306" | quote }}
           {{- end }}
+          {{- if eq .Values.appName "todoapp-frontend" }}
+          env:
+            - name: API_URL
+              value: "https://{{ .Values.backend.ingress.domainName }}"
+          {{- end }}
           # livenessProbe:
           #   httpGet:
           #     path: /tasks

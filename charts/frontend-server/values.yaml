@@ -14,3 +14,6 @@ ingress:
   domainName: frontend-dev.khacthienit.click
   path: /
   pathType: Prefix
+backend:
+  ingress:
+    domainName: backend-dev.khacthienit.click
