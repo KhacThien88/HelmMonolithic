@@ -13,7 +13,6 @@ for SERVICE_NAME in "${SERVICES[@]}"; do
     --set ingress.domainName=${SERVICE_NAME}.${DOMAIN_SUFFIX}
 done
 
-kubectl apply -f HelmMonolithic/argocd/app_project/app_argobe_dev.yml
-kubectl apply -f HelmMonolithic/argocd/app_project/app_argobe_staging.yml
+kubectl apply -f HelmMonolithic/argocd/app_project/app_argobe.yml
 kubectl apply -f HelmMonolithic/argocd/dev/backend-server.yml
 kubectl apply -f HelmMonolithic/argocd/staging/backend-server.yml
